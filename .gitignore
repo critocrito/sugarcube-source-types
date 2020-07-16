@@ -1,7 +1,7 @@
 !.keep
 dist
 
-# annoying mac artifacts
+# Annoying macOS artifacts
 .DS_Store
 
 # NodeJS
@@ -15,3 +15,6 @@ npm*.log
 
 # Eslint
 .eslintcache
+
+# Code coverage
+.nyc_output
