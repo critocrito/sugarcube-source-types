@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "dist",
     "declarationDir": "dist",
     "allowJs": true,
-    "allowSyntheticDefaultImports": true, 
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "declaration": true,
     "isolatedModules": true,

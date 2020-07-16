@@ -1,9 +1,9 @@
 {
   "name": "@sugarcube/source-types",
-  "version": "0.1.0",
-  "main": "index.js",
   "license": "GPL-3.0",
   "author": "Christo <christo@cryptodrunks.net>",
+  "version": "0.1.0",
+  "main": "index.js",
   "scripts": {
     "build": "yarn verify && yarn compile",
     "clean": "rimraf dist",
@@ -26,6 +26,8 @@
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
+    "@babel/register": "^7.10.5",
+    "@types/lodash": "^4.14.157",
     "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@typescript-eslint/parser": "^3.6.1",
     "ava": "^3.10.1",
@@ -41,6 +43,7 @@
     "eslint-plugin-unicorn": "^20.1.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
+    "lodash": "^4.17.19",
     "prettier": "^2.0.5",
     "prettier-package-json": "^2.1.3",
     "rimraf": "^3.0.2",
@@ -50,6 +53,7 @@
   },
   "ava": {
     "require": [
+      "./test/_register.js",
       "ts-node/register/transpile-only"
     ],
     "files": [
@@ -151,6 +155,7 @@
         {
           "devDependencies": [
             "test/**/*.ts",
+            "test/**/*.js",
             "test/test-setup.js",
             "scripts/**/*.js"
           ]
