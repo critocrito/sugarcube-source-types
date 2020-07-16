@@ -1,5 +1,7 @@
 import {URL} from "url";
 
+import {isString} from "./utils";
+
 export const parseYoutubeVideo = (query: string): string => {
   // e.g. o0tjic523cg
   if (!query.startsWith("http")) return query;
@@ -12,7 +14,7 @@ export const parseYoutubeVideo = (query: string): string => {
 
   // e.g. https://www.youtube.com/watch?v=tcCBtSjKEzI
   const id = u.searchParams.get("v");
-  if (typeof id === "string") return id;
+  if (isString(id)) return id;
 
   // e.g. https://www.youtube.com/embed/iq_XLq5ONtE?version
   if (u.pathname.startsWith("/embed"))
