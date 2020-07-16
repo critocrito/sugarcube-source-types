@@ -1,0 +1,197 @@
+{
+  "name": "@sugarcube/source-types",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "GPL-3.0",
+  "author": "Christo <christo@cryptodrunks.net>",
+  "scripts": {
+    "build": "yarn verify && yarn compile",
+    "clean": "rimraf dist",
+    "precompile": "yarn clean",
+    "compile": "yarn compile:src && yarn compile:types",
+    "compile:src": "cross-env NODE_ENV=production babel --verbose -x .ts -s inline -d dist src",
+    "compile:types": "cross-env NODE_ENV=production tsc --project tsconfig.types.json",
+    "compile:watch": "yarn compile -w",
+    "fix": "yarn lint --fix",
+    "lint": "eslint --cache --ext .js,.ts src test",
+    "test": "ava --verbose",
+    "test:watch": "yarn test --watch",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "yarn type-check -w",
+    "verify": "yarn lint && yarn type-check && yarn test"
+  },
+  "devDependencies": {
+    "@ava/babel": "^1.0.1",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "ava": "^3.10.1",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-ava": "^10.4.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "eslint-plugin-unicorn": "^20.1.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "prettier-package-json": "^2.1.3",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6",
+    "typescript-language-server": "^0.4.0"
+  },
+  "ava": {
+    "require": [
+      "ts-node/register/transpile-only"
+    ],
+    "files": [
+      "test/**/*",
+      "test/helpers/**/*"
+    ],
+    "ignoredByWatcher": [
+      "{dist,coverage,doc,resources,scripts}/**"
+    ],
+    "extensions": [
+      "ts"
+    ],
+    "babel": {
+      "compileEnhancements": false,
+      "compileAsTests": [
+        "test/helpers/**/*"
+      ]
+    }
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/env",
+        {
+          "targets": {
+            "node": "12"
+          }
+        }
+      ],
+      "@babel/typescript"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": "2018",
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "extends": [
+      "airbnb-typescript/base",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:ava/recommended",
+      "plugin:promise/recommended",
+      "plugin:unicorn/recommended",
+      "plugin:prettier/recommended",
+      "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+      "@typescript-eslint",
+      "ava",
+      "simple-import-sort",
+      "promise",
+      "unicorn",
+      "prettier"
+    ],
+    "rules": {
+      "object-curly-spacing": "off",
+      "no-console": [
+        "warn",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ],
+      "no-use-before-define": [
+        "error",
+        {
+          "functions": false,
+          "classes": true,
+          "variables": true
+        }
+      ],
+      "@typescript-eslint/no-use-before-define": [
+        "error",
+        {
+          "functions": false,
+          "classes": true,
+          "variables": true,
+          "typedefs": true
+        }
+      ],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ],
+      "import/prefer-default-export": "off",
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": [
+            "test/**/*.ts",
+            "test/test-setup.js",
+            "scripts/**/*.js"
+          ]
+        }
+      ],
+      "simple-import-sort/sort": "error",
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/no-useless-undefined": "off",
+      "unicorn/no-reduce": "off"
+    },
+    "overrides": [
+      {
+        "files": [
+          "*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/explicit-function-return-type": "error"
+        }
+      }
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "! git rev-parse --abbrev-ref HEAD | grep -q master || (yarn verify && lint-staged)"
+    }
+  },
+  "lint-staged": {
+    "{*.json,*rc}": [
+      "prettier --parser json --write"
+    ],
+    "**/package.json": [
+      "prettier-package-json --write"
+    ],
+    "{*.js,*.ts}": [
+      "eslint --fix"
+    ]
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "bracketSpacing": false,
+    "arrowParens": "always",
+    "tabWidth": 2
+  }
+}
