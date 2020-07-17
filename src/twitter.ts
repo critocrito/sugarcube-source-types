@@ -63,14 +63,27 @@ export const isTwitterFeed = (term?: string | number | null): boolean => {
   return !!feedId;
 };
 
-export const normalizeTwitterTweetUrl = (url: string): string => {
-  const userId = parseTwitterUser(url);
-  const tweetId = parseTweetId(url);
-  if (userId === tweetId) return `https://twitter.com/i/status/${tweetId}`;
-  return `https://twitter.com/${userId}/status/${tweetId}`;
+export const normalizeTwitterTweetUrl = (
+  term?: string | null,
+): string | undefined => {
+  if (!isString(term)) return undefined;
+
+  const tweetId = parseTweetId(term);
+  const userId = parseTwitterUser(term);
+
+  // We test for http based tweet terms to handle cases of tweet terms that is just a string.
+  if (term.startsWith("http") && isString(tweetId) && isString(userId))
+    return `https://twitter.com/${userId}/status/${tweetId}`;
+
+  if (isString(tweetId)) return `https://twitter.com/i/status/${tweetId}`;
+
+  return undefined;
 };
 
-export const normalizeTwitterUserUrl = (url: string): string => {
-  const userId = parseTwitterUser(url);
-  return `https://twitter.com/${userId}`;
+export const normalizeTwitterUserUrl = (
+  term?: string | null,
+): string | undefined => {
+  const userId = parseTwitterUser(term);
+
+  return isString(userId) ? `https://twitter.com/${userId}` : undefined;
 };

@@ -121,13 +121,28 @@ test("twitter: can normalize tweet urls", (t) => {
 });
 
 test("twitter: can normalize tweet ids", (t) => {
-  const id = "1073152537400934400";
+  const terms = [
+    "https://twitter.com/i/status/1073152537400934400",
+    "1073152537400934400",
+  ];
 
   const expected = "https://twitter.com/i/status/1073152537400934400";
 
-  const result = normalizeTwitterTweetUrl(id);
+  const result = every((u) => normalizeTwitterTweetUrl(u) === expected, terms);
 
-  t.is(result, expected);
+  t.true(result);
+});
+
+test("twitter: fail to normalize invalid tweet inputs", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  const invalidUrls = [undefined, null];
+
+  const result = every(
+    (u) => normalizeTwitterTweetUrl(u) === undefined,
+    invalidUrls,
+  );
+
+  t.true(result);
 });
 
 /*
@@ -139,6 +154,18 @@ test("twitter: can normalize user urls", (t) => {
   const expected = "https://twitter.com/WADHOSHA";
 
   const result = every((u) => normalizeTwitterUserUrl(u) === expected, urls);
+
+  t.true(result);
+});
+
+test("twitter: fail to normalize invalid user inputs", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  const invalidUrls = [undefined, null];
+
+  const result = every(
+    (u) => normalizeTwitterUserUrl(u) === undefined,
+    invalidUrls,
+  );
 
   t.true(result);
 });
