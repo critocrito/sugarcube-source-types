@@ -1,14 +1,19 @@
 import {URL} from "url";
 
-import {isNumber} from "./utils";
+import {isNumber, isString} from "./utils";
 
-export const isTwitterTweet = (url: string): boolean => {
+export const isTwitterTweet = (url: string | null | undefined): boolean => {
+  if (!isString(url)) return false;
+
   const u = new URL(url);
   if (/twitter\.com/.test(u.hostname) && /status/.test(u.pathname)) return true;
+
   return false;
 };
 
-export const isTwitterFeed = (url: string): boolean => {
+export const isTwitterFeed = (url: string | null | undefined): boolean => {
+  if (!isString(url)) return false;
+
   const u = new URL(url);
   if (
     /twitter\.com/.test(u.hostname) &&
@@ -16,6 +21,7 @@ export const isTwitterFeed = (url: string): boolean => {
     u.pathname.split("/").filter((x) => x !== "")[0] !== "search"
   )
     return true;
+
   return false;
 };
 
