@@ -1,11 +1,13 @@
-export const youtubeVideoUrls = [
+export const youtubeVideos = [
   "https://www.youtube.com/watch?v=tcCBtSjKEzI",
   "http://youtu.be/o0tjic523cg",
+  "https://www.youtube.com/embed/iq_XLq5ONtE",
   "https://www.youtube.com/embed/iq_XLq5ONtE?version",
 ];
 
-export const youtubeChannelUrls = [
+export const youtubeChannels = [
   "https://www.youtube.com/channel/UCegnDJbvrOhvbLU3IzeIV8A",
+  "UCegnDJbvrOhvbLU3IzeIV8A",
 ];
 
 export const notYoutubeVideoUrls = [

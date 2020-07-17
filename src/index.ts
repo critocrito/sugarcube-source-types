@@ -7,13 +7,13 @@ type SourceType =
   | "twitter_tweet"
   | "twitter_user";
 
-export const sourceType = (term?: string): SourceType | undefined => {
+export const sourceType = (term?: string | null): SourceType | undefined => {
   switch (true) {
-    case youtube.isYoutubeVideo(term):
-      return "youtube_video";
-
     case youtube.isYoutubeChannel(term):
       return "youtube_channel";
+
+    case youtube.isYoutubeVideo(term):
+      return "youtube_video";
 
     case twitter.isTwitterTweet(term):
       return "twitter_tweet";

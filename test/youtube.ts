@@ -11,8 +11,8 @@ import {
 } from "../src";
 import {
   notYoutubeVideoUrls,
-  youtubeChannelUrls,
-  youtubeVideoUrls,
+  youtubeChannels,
+  youtubeVideos,
 } from "./helpers/fixtures";
 
 test("youtube: can parse the video id from a video id", (t) => {
@@ -76,7 +76,7 @@ test("youtube: can parse the channel id from a channel url", (t) => {
 );
 
 test("youtube: can parse video urls", (t) => {
-  const result = every(isYoutubeVideo, youtubeVideoUrls);
+  const result = every(isYoutubeVideo, youtubeVideos);
 
   t.true(result);
 });
@@ -88,26 +88,13 @@ test("youtube: fails similar video urls", (t) => {
 });
 
 test("youtube: fails channel urls", (t) => {
-  const result = every(isYoutubeVideo, youtubeChannelUrls);
+  const result = every(isYoutubeVideo, youtubeChannels);
 
   t.false(result);
 });
 
-test("youtube: can normalize video urls", (t) => {
-  const urls = [
-    "https://www.youtube.com/watch?v=tcCBtSjKEzI",
-    "http://youtu.be/tcCBtSjKEzI",
-    "tcCBtSjKEzI",
-  ];
-  const expected = "https://www.youtube.com/watch?v=tcCBtSjKEzI";
-
-  const result = every((u) => normalizeYoutubeVideoUrl(u) === expected, urls);
-
-  t.true(result);
-});
-
 test("youtube: can parse channel urls", (t) => {
-  const result = every(isYoutubeChannel, youtubeChannelUrls);
+  const result = every(isYoutubeChannel, youtubeChannels);
 
   t.true(result);
 });
@@ -115,7 +102,7 @@ test("youtube: can parse channel urls", (t) => {
 test("youtube: fails to parse video urls", (t) => {
   const result = every(
     isYoutubeChannel,
-    youtubeVideoUrls.concat(notYoutubeVideoUrls),
+    youtubeVideos.concat(notYoutubeVideoUrls),
   );
 
   t.false(result);
@@ -131,6 +118,19 @@ test("youtube: returns false on undefined channel", (t) => {
   t.false(every(isYoutubeChannel, [undefined, null]));
 });
 
+test("youtube: can normalize video urls", (t) => {
+  const urls = [
+    "https://www.youtube.com/watch?v=tcCBtSjKEzI",
+    "http://youtu.be/tcCBtSjKEzI",
+    "tcCBtSjKEzI",
+  ];
+  const expected = "https://www.youtube.com/watch?v=tcCBtSjKEzI";
+
+  const result = every((u) => normalizeYoutubeVideoUrl(u) === expected, urls);
+
+  t.true(result);
+});
+
 test("youtube: can normalize channel urls", (t) => {
   const urls = [
     "https://www.youtube.com/channel/UCegnDJbvrOhvbLU3IzeIV8A",
@@ -140,6 +140,30 @@ test("youtube: can normalize channel urls", (t) => {
   const expected = "https://www.youtube.com/channel/UCegnDJbvrOhvbLU3IzeIV8A";
 
   const result = every((u) => normalizeYoutubeChannelUrl(u) === expected, urls);
+
+  t.true(result);
+});
+
+test("youtube: fail to normalize invalid channel inputs", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  const invalidUrls = ["gibberish", undefined, null];
+
+  const result = every(
+    (u) => normalizeYoutubeChannelUrl(u) === undefined,
+    invalidUrls,
+  );
+
+  t.true(result);
+});
+
+test("youtube: fail to normalize invalid video inputs", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  const invalidUrls = ["gibberish", undefined, null];
+
+  const result = every(
+    (u) => normalizeYoutubeVideoUrl(u) === undefined,
+    invalidUrls,
+  );
 
   t.true(result);
 });

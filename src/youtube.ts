@@ -1,78 +1,77 @@
 import {URL} from "url";
 
-import {isString} from "./utils";
+import {isString, segment} from "./utils";
 
-export const isYoutubeVideo = (term?: string): boolean => {
-  if (!isString(term)) return false;
+export const parseYoutubeVideo = (term?: string | null): string | undefined => {
+  if (!isString(term)) return undefined;
 
-  const u = new URL(term);
-  // e.g. https://www.youtube.com/watch?v=tcCBtSjKEzI
-  // eslint-disable-next-line unicorn/no-null
-  if (/youtube\.com/.test(u.hostname) && u.searchParams.get("v") != null)
-    return true;
-  // e.g. http://youtu.be/o0tjic523cg
-  if (
-    /youtu\.be/.test(u.hostname) &&
-    u.pathname.split("/").filter((x) => x !== "").length === 1
-  )
-    return true;
-  // e.g. https://www.youtube.com/embed/iq_XLq5ONtE?version
-  if (
-    /youtube\.com/.test(u.hostname) &&
-    u.pathname.split("/").filter((x) => x !== "").length === 2 &&
-    u.pathname.split("/").filter((x) => x !== "")[0] === "embed"
-  )
-    return true;
+  if (term.startsWith("http")) {
+    const u = new URL(term);
 
-  return false;
-};
+    // e.g. http://youtu.be/o0tjic523cg
+    if (u.hostname.startsWith("youtu.be")) return segment(0, u);
 
-export const isYoutubeChannel = (term?: string): boolean => {
-  if (!isString(term)) return false;
+    // e.g. https://www.youtube.com/watch?v=tcCBtSjKEzI
+    const id = u.searchParams.get("v");
+    if (isString(id)) return id;
 
-  const u = new URL(term);
-  if (/youtube\.com/.test(u.hostname) && /channel/.test(u.pathname))
-    return true;
-
-  return false;
-};
-
-export const parseYoutubeVideo = (query: string): string => {
-  // e.g. o0tjic523cg
-  if (!query.startsWith("http")) return query;
-
-  const u = new URL(query);
-
-  // e.g. http://youtu.be/o0tjic523cg
-  if (u.hostname.startsWith("youtu.be"))
-    return u.pathname.split("/").filter((segment) => segment.length > 0)[0];
-
-  // e.g. https://www.youtube.com/watch?v=tcCBtSjKEzI
-  const id = u.searchParams.get("v");
-  if (isString(id)) return id;
-
-  // e.g. https://www.youtube.com/embed/iq_XLq5ONtE?version
-  if (u.pathname.startsWith("/embed"))
-    return u.pathname.split("/").filter((x) => x !== "")[1];
-
-  // FIXME: Should I throw if the url can't be parsed?
-  return query;
-};
-
-export const parseYoutubeChannel = (query: string): string => {
-  if (query.startsWith("http")) {
-    const u = new URL(query);
-    return u.pathname.replace(/^\//, "").replace(/\/$/, "").split("/")[1];
+    // e.g. https://www.youtube.com/embed/iq_XLq5ONtE?version
+    if (u.pathname.startsWith("/embed")) return segment(1, u);
   }
-  return query;
+
+  // e.g. o0tjic523cg
+  if (term.length === 11) return term;
+
+  return undefined;
 };
 
-export const normalizeYoutubeVideoUrl = (url: string): string => {
-  const videoId = parseYoutubeVideo(url);
-  return `https://www.youtube.com/watch?v=${videoId}`;
+export const parseYoutubeChannel = (
+  term?: string | null,
+): string | undefined => {
+  if (!isString(term)) return undefined;
+
+  if (term.startsWith("http")) {
+    const u = new URL(term);
+
+    // Accept channel ids in the form of https://youtube.com/channel/UCegnDJbvrOhvbLU3IzeIV8A
+    if (/youtube\.com/.test(u.hostname) && /channel/.test(u.pathname))
+      return segment(1, u);
+  }
+
+  // Accept channel id's of the form: UCegnDJbvrOhvbLU3IzeIV8A
+  if (term.length === 24 && term.startsWith("U")) return term;
+
+  return undefined;
 };
 
-export const normalizeYoutubeChannelUrl = (url: string): string => {
+export const isYoutubeVideo = (term?: string | null): boolean => {
+  const videoId = parseYoutubeVideo(term);
+
+  return !!isString(videoId);
+};
+
+export const isYoutubeChannel = (term?: string | null): boolean => {
+  const channelId = parseYoutubeChannel(term);
+
+  return !!isString(channelId);
+};
+
+export const normalizeYoutubeVideoUrl = (
+  term?: string | null,
+): string | undefined => {
+  const videoId = parseYoutubeVideo(term);
+
+  return isString(videoId)
+    ? `https://www.youtube.com/watch?v=${videoId}`
+    : undefined;
+};
+
+export const normalizeYoutubeChannelUrl = (
+  url?: string | null,
+): string | undefined => {
   const channelId = parseYoutubeChannel(url);
-  return `https://www.youtube.com/channel/${channelId}`;
+
+  return isString(channelId)
+    ? `https://www.youtube.com/channel/${channelId}`
+    : undefined;
 };

@@ -2,7 +2,7 @@ import {URL} from "url";
 
 import {isNumber, isString} from "./utils";
 
-export const isTwitterTweet = (term?: string): boolean => {
+export const isTwitterTweet = (term?: string | null): boolean => {
   if (!isString(term)) return false;
 
   const u = new URL(term);
@@ -11,7 +11,7 @@ export const isTwitterTweet = (term?: string): boolean => {
   return false;
 };
 
-export const isTwitterFeed = (term?: string): boolean => {
+export const isTwitterFeed = (term?: string | null): boolean => {
   if (!isString(term)) return false;
 
   const u = new URL(term);

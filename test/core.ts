@@ -7,20 +7,20 @@ import {
   notYoutubeVideoUrls,
   twitterFeedUrls,
   twitterTweetUrls,
-  youtubeChannelUrls,
-  youtubeVideoUrls,
+  youtubeChannels,
+  youtubeVideos,
 } from "./helpers/fixtures";
 
 test("can determine Youtube video urls", (t) => {
   const matchYoutubeVideo = flow([sourceType, isEqual("youtube_video")]);
 
-  t.true(every(matchYoutubeVideo, youtubeVideoUrls));
+  t.true(every(matchYoutubeVideo, youtubeVideos));
 });
 
 test("can determine Youtube channel urls", (t) => {
   const matchYoutubeChannel = flow([sourceType, isEqual("youtube_channel")]);
 
-  t.true(every(matchYoutubeChannel, youtubeChannelUrls));
+  t.true(every(matchYoutubeChannel, youtubeChannels));
 });
 
 test("can determine Twitter tweet urls", (t) => {
