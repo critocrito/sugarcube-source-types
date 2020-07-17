@@ -40,58 +40,71 @@ test("twitter: fails to parse tweet ids when id is invalid", (t) => {
 });
 
 test("twitter: can parse a user name", (t) => {
-  const userName = "my_user";
-  const expected = userName;
-  const result = parseTwitterUser(userName);
-  t.is(result, expected);
-});
-
-test("twitter: can parse a user name with an @", (t) => {
-  const userName = "@my_user";
+  const userNames = ["my_user", "@my_user", "https://twitter.com/my_user"];
   const expected = "my_user";
-  const result = parseTwitterUser(userName);
-  t.is(result, expected);
+
+  userNames.forEach((u) => {
+    const result = parseTwitterUser(u);
+    t.is(result, expected);
+  });
 });
 
 test("twitter: can parse a user id", (t) => {
-  const userId = "3067493325";
-  const expected = userId;
-  const result = parseTwitterUser(userId);
-  t.is(result, expected);
+  const userNames = [3067493325, "3067493325"];
+  const expected = "3067493325";
+
+  userNames.forEach((u) => {
+    const result = parseTwitterUser(u);
+    t.is(result, expected);
+  });
 });
 
-test("twitter: can parse a user id as integer", (t) => {
-  const userId = 3067493325;
-  const expected = userId.toString();
-  const result = parseTwitterUser(userId);
-  t.is(result, expected);
-});
-
-test("twitter: can parse a full url", (t) => {
-  const userId = "https://twitter.com/my_user";
-  const expected = "my_user";
-  const result = parseTwitterUser(userId);
-  t.is(result, expected);
-});
-
-test("twitter: can parse tweet urls", (t) => {
+test("twitter: can check tweet urls", (t) => {
   const result = every(isTwitterTweet, twitterTweets);
 
   t.true(result);
 });
 
-test("twitter: fails similar tweet urls", (t) => {
+test("twitter: fails non tweet urls", (t) => {
   const result = every(isTwitterTweet, notTwitterTweets);
 
   t.false(result);
 });
 
-test("twitter: fails feed urls", (t) => {
+test("twitter: fails non feed urls", (t) => {
   const result = every(isTwitterTweet, twitterFeeds);
 
   t.false(result);
 });
 
+test("twitter: fails the predicate on undefined tweets", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  t.false(every(isTwitterTweet, ["gibberish", undefined, null]));
+});
+
+/*
+ * Twitter Feeds Predicate: isTwitterFeed
+ */
+test("twitter: feed predicate succeeds on feed urls", (t) => {
+  const result = every(isTwitterFeed, twitterFeeds);
+
+  t.true(result);
+});
+
+test("twitter: tweet predicate fails on feed urls", (t) => {
+  const result = every(isTwitterFeed, twitterTweets.concat(notTwitterTweets));
+
+  t.false(result);
+});
+
+test("twitter: feed predicate on undefined feed", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  t.false(every(isTwitterFeed, [undefined, null]));
+});
+
+/*
+ * Normalize Tweet Urls: normalizeTwitterTweetUrl
+ */
 test("twitter: can normalize tweet urls", (t) => {
   const urls = [
     "https://twitter.com/Ibrahim_waza/status/1073152537400934400",
@@ -117,28 +130,9 @@ test("twitter: can normalize tweet ids", (t) => {
   t.is(result, expected);
 });
 
-test("twitter: can parse feed urls", (t) => {
-  const result = every(isTwitterFeed, twitterFeeds);
-
-  t.true(result);
-});
-
-test("twitter: fails to parse feed urls", (t) => {
-  const result = every(isTwitterFeed, twitterTweets.concat(notTwitterTweets));
-
-  t.false(result);
-});
-
-test("twitter: returns false on undefined tweet", (t) => {
-  // eslint-disable-next-line unicorn/no-null
-  t.false(every(isTwitterTweet, ["gibberish", undefined, null]));
-});
-
-test("twitter: returns false on undefined feed", (t) => {
-  // eslint-disable-next-line unicorn/no-null
-  t.false(every(isTwitterFeed, [undefined, null]));
-});
-
+/*
+ * Normalize User Urls: normalizeTwitterUserUrl
+ */
 test("twitter: can normalize user urls", (t) => {
   const urls = ["https://twitter.com/WADHOSHA", "WADHOSHA", "@WADHOSHA"];
 

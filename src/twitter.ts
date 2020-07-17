@@ -2,22 +2,6 @@ import {URL} from "url";
 
 import {isNumber, isString, segment} from "./utils";
 
-export const isTwitterFeed = (term?: string | null): boolean => {
-  if (!isString(term)) return false;
-
-  if (term.startsWith("http")) {
-    const u = new URL(term);
-    if (!/twitter\.com/.test(u.hostname)) return false;
-    if (
-      u.pathname.split("/").filter((x) => x !== "").length === 1 &&
-      u.pathname.split("/").filter((x) => x !== "")[0] !== "search"
-    )
-      return true;
-  }
-
-  return false;
-};
-
 export const parseTweetId = (term?: string | null): string | undefined => {
   if (!isString(term)) return undefined;
   // /status/.test(u.pathname)) return true;
@@ -39,19 +23,44 @@ export const parseTweetId = (term?: string | null): string | undefined => {
   return undefined;
 };
 
-export const parseTwitterUser = (user: string | number): string => {
-  if (isNumber(user)) return user.toString();
-  if (user.startsWith("http")) {
-    const u = new URL(user);
-    return u.pathname.replace(/^\//, "").replace(/\/$/, "").split("/")[0];
+export const parseTwitterUser = (
+  term?: string | number | null,
+): string | undefined => {
+  if (isNumber(term)) return term.toString();
+
+  if (!isString(term)) return undefined;
+
+  if (term.startsWith("http")) {
+    const u = new URL(term);
+
+    if (!/twitter\.com/.test(u.hostname)) return undefined;
+
+    // https://twitter.com/search?q=%23موكب14مارس&src=hash
+    if (segment(0, u) === "search") return undefined;
+
+    // https://twitter.com/i/status/1073152537400934400
+    if (segment(0, u) === "i") return undefined;
+
+    // https://twitter.com/Ibrahim_waza/status/1073152537400934400
+    if (segment(1, u) === "status") return segment(0, u);
+
+    // https://twitter.com/WADHOSHA
+    return segment(0, u);
   }
-  return user.replace(/^@/, "");
+
+  return term.replace(/^@/, "");
 };
 
 export const isTwitterTweet = (term?: string | null): boolean => {
   const tweetId = parseTweetId(term);
 
   return !!isString(tweetId);
+};
+
+export const isTwitterFeed = (term?: string | number | null): boolean => {
+  const feedId = parseTwitterUser(term);
+
+  return !!feedId;
 };
 
 export const normalizeTwitterTweetUrl = (url: string): string => {
