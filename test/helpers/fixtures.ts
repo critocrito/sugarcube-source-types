@@ -15,10 +15,11 @@ export const notYoutubeVideos = [
 ];
 
 export const twitterTweets = [
+  "1073152537400934400",
   "https://twitter.com/Ibrahim_waza/status/1073152537400934400",
-  "https://twitter.com/LorianSynaro/status/1101881275558825985/photo/1",
-  "https://mobile.twitter.com/kamalrahmtalla1/status/1150487367037440000?fbclid=IwAR2429sTkE",
-  "https://twitter.com/i/status/1101499653441372160",
+  "https://twitter.com/Ibrahim_waza/status/1073152537400934400/photo/1",
+  "https://mobile.twitter.com/Ibrahim_waza/status/1073152537400934400?fbclid=IwAR2429sTkE",
+  "https://twitter.com/i/status/1073152537400934400",
 ];
 
 export const twitterFeeds = ["https://twitter.com/WADHOSHA"];

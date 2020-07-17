@@ -16,32 +16,27 @@ import {
 } from "./helpers/fixtures";
 
 test("twitter: can parse a regular id string", (t) => {
-  const tweetId = "990930831148572672";
-  const expected = tweetId;
-  const result = parseTweetId(tweetId);
-  t.is(result, expected);
+  const result = every(
+    (u) => parseTweetId(u) === "1073152537400934400",
+    twitterTweets,
+  );
+
+  t.true(result);
 });
 
-test("twitter: can parse a full tweet URL", (t) => {
-  const tweetId =
-    "https://twitter.com/RFS_mediaoffice/status/990930831148572672";
-  const expected = "990930831148572672";
-  const result = parseTweetId(tweetId);
-  t.is(result, expected);
-});
+test("twitter: ignore non twitter URLS when parsing tweet ids", (t) => {
+  const result = parseTweetId("http://example.com/tweet");
 
-test("twitter: can parse a direct photo URL as tweet id", (t) => {
-  const tweetId =
-    "https://twitter.com/LorianSynaro/status/1101881275558825985/photo/1";
-  const expected = "1101881275558825985";
-  const result = parseTweetId(tweetId);
-  t.is(result, expected);
-});
-
-test("twitter: returns null when tweet id is undefined", (t) => {
-  const tweetId = undefined;
-  const result = parseTweetId(tweetId);
   t.is(result, undefined);
+});
+
+test("twitter: fails to parse tweet ids when id is invalid", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  const tweetIds = ["gibberish", undefined, null];
+
+  const result = every((u) => parseTweetId(u) === undefined, tweetIds);
+
+  t.true(result);
 });
 
 test("twitter: can parse a user name", (t) => {
@@ -136,7 +131,7 @@ test("twitter: fails to parse feed urls", (t) => {
 
 test("twitter: returns false on undefined tweet", (t) => {
   // eslint-disable-next-line unicorn/no-null
-  t.false(every(isTwitterTweet, [undefined, null]));
+  t.false(every(isTwitterTweet, ["gibberish", undefined, null]));
 });
 
 test("twitter: returns false on undefined feed", (t) => {
