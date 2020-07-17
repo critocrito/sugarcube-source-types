@@ -137,6 +137,16 @@ test("twitter: fails to parse feed urls", (t) => {
   t.false(result);
 });
 
+test("twitter: returns false on undefined tweet", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  t.false(every(isTwitterTweet, [undefined, null]));
+});
+
+test("twitter: returns false on undefined feed", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  t.false(every(isTwitterFeed, [undefined, null]));
+});
+
 test("twitter: can normalize user urls", (t) => {
   const urls = ["https://twitter.com/WADHOSHA", "WADHOSHA", "@WADHOSHA"];
 

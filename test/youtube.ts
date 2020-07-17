@@ -121,6 +121,16 @@ test("youtube: fails to parse video urls", (t) => {
   t.false(result);
 });
 
+test("youtube: returns false on undefined video", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  t.false(every(isYoutubeVideo, [undefined, null]));
+});
+
+test("youtube: returns false on undefined channel", (t) => {
+  // eslint-disable-next-line unicorn/no-null
+  t.false(every(isYoutubeChannel, [undefined, null]));
+});
+
 test("youtube: can normalize channel urls", (t) => {
   const urls = [
     "https://www.youtube.com/channel/UCegnDJbvrOhvbLU3IzeIV8A",
