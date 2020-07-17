@@ -35,7 +35,8 @@ export const parseYoutubeChannel = (query: string): string => {
 export const isYoutubeVideo = (url: string): boolean => {
   const u = new URL(url);
   // e.g. https://www.youtube.com/watch?v=tcCBtSjKEzI
-  if (/youtube\.com/.test(u.hostname) && u.searchParams.get("v") !== undefined)
+  // eslint-disable-next-line unicorn/no-null
+  if (/youtube\.com/.test(u.hostname) && u.searchParams.get("v") != null)
     return true;
   // e.g. http://youtu.be/o0tjic523cg
   if (

@@ -93,13 +93,13 @@ test("youtube: can parse video urls", (t) => {
 test("youtube: fails similar video urls", (t) => {
   const result = every(isYoutubeVideo, notVideoUrls);
 
-  t.true(result);
+  t.false(result);
 });
 
 test("youtube: fails channel urls", (t) => {
   const result = every(isYoutubeVideo, channelUrls);
 
-  t.true(result);
+  t.false(result);
 });
 
 test("youtube: can normalize video urls", (t) => {
