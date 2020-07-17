@@ -7,24 +7,21 @@ type SourceType =
   | "twitter_tweet"
   | "twitter_user";
 
-export const sourceType = (
-  source: string | null | undefined,
-): SourceType | undefined => {
+export const sourceType = (term?: string): SourceType | undefined => {
   switch (true) {
-    case youtube.isYoutubeVideo(source):
+    case youtube.isYoutubeVideo(term):
       return "youtube_video";
 
-    case youtube.isYoutubeChannel(source):
+    case youtube.isYoutubeChannel(term):
       return "youtube_channel";
 
-    case twitter.isTwitterTweet(source):
+    case twitter.isTwitterTweet(term):
       return "twitter_tweet";
 
-    case twitter.isTwitterFeed(source):
+    case twitter.isTwitterFeed(term):
       return "twitter_user";
 
     default:
-      // throw new Error(`Source type of ${source} could not be determined.`);
       return undefined;
   }
 };

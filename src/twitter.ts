@@ -2,19 +2,19 @@ import {URL} from "url";
 
 import {isNumber, isString} from "./utils";
 
-export const isTwitterTweet = (url: string | null | undefined): boolean => {
-  if (!isString(url)) return false;
+export const isTwitterTweet = (term?: string): boolean => {
+  if (!isString(term)) return false;
 
-  const u = new URL(url);
+  const u = new URL(term);
   if (/twitter\.com/.test(u.hostname) && /status/.test(u.pathname)) return true;
 
   return false;
 };
 
-export const isTwitterFeed = (url: string | null | undefined): boolean => {
-  if (!isString(url)) return false;
+export const isTwitterFeed = (term?: string): boolean => {
+  if (!isString(term)) return false;
 
-  const u = new URL(url);
+  const u = new URL(term);
   if (
     /twitter\.com/.test(u.hostname) &&
     u.pathname.split("/").filter((x) => x !== "").length === 1 &&
@@ -25,7 +25,7 @@ export const isTwitterFeed = (url: string | null | undefined): boolean => {
   return false;
 };
 
-export const parseTweetId = (id: string | void): string | undefined => {
+export const parseTweetId = (id?: string): string | undefined => {
   if (!isString(id)) return undefined;
   if (id.startsWith("http")) {
     const u = new URL(id);

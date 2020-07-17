@@ -32,10 +32,10 @@ export const parseYoutubeChannel = (query: string): string => {
   return query;
 };
 
-export const isYoutubeVideo = (url: string | null | undefined): boolean => {
-  if (!isString(url)) return false;
+export const isYoutubeVideo = (term?: string): boolean => {
+  if (!isString(term)) return false;
 
-  const u = new URL(url);
+  const u = new URL(term);
   // e.g. https://www.youtube.com/watch?v=tcCBtSjKEzI
   // eslint-disable-next-line unicorn/no-null
   if (/youtube\.com/.test(u.hostname) && u.searchParams.get("v") != null)
@@ -57,10 +57,10 @@ export const isYoutubeVideo = (url: string | null | undefined): boolean => {
   return false;
 };
 
-export const isYoutubeChannel = (url: string | null | undefined): boolean => {
-  if (!isString(url)) return false;
+export const isYoutubeChannel = (term?: string): boolean => {
+  if (!isString(term)) return false;
 
-  const u = new URL(url);
+  const u = new URL(term);
   if (/youtube\.com/.test(u.hostname) && /channel/.test(u.pathname))
     return true;
 
