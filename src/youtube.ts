@@ -2,36 +2,6 @@ import {URL} from "url";
 
 import {isString} from "./utils";
 
-export const parseYoutubeVideo = (query: string): string => {
-  // e.g. o0tjic523cg
-  if (!query.startsWith("http")) return query;
-
-  const u = new URL(query);
-
-  // e.g. http://youtu.be/o0tjic523cg
-  if (u.hostname.startsWith("youtu.be"))
-    return u.pathname.split("/").filter((segment) => segment.length > 0)[0];
-
-  // e.g. https://www.youtube.com/watch?v=tcCBtSjKEzI
-  const id = u.searchParams.get("v");
-  if (isString(id)) return id;
-
-  // e.g. https://www.youtube.com/embed/iq_XLq5ONtE?version
-  if (u.pathname.startsWith("/embed"))
-    return u.pathname.split("/").filter((x) => x !== "")[1];
-
-  // FIXME: Should I throw if the url can't be parsed?
-  return query;
-};
-
-export const parseYoutubeChannel = (query: string): string => {
-  if (query.startsWith("http")) {
-    const u = new URL(query);
-    return u.pathname.replace(/^\//, "").replace(/\/$/, "").split("/")[1];
-  }
-  return query;
-};
-
 export const isYoutubeVideo = (term?: string): boolean => {
   if (!isString(term)) return false;
 
@@ -65,6 +35,36 @@ export const isYoutubeChannel = (term?: string): boolean => {
     return true;
 
   return false;
+};
+
+export const parseYoutubeVideo = (query: string): string => {
+  // e.g. o0tjic523cg
+  if (!query.startsWith("http")) return query;
+
+  const u = new URL(query);
+
+  // e.g. http://youtu.be/o0tjic523cg
+  if (u.hostname.startsWith("youtu.be"))
+    return u.pathname.split("/").filter((segment) => segment.length > 0)[0];
+
+  // e.g. https://www.youtube.com/watch?v=tcCBtSjKEzI
+  const id = u.searchParams.get("v");
+  if (isString(id)) return id;
+
+  // e.g. https://www.youtube.com/embed/iq_XLq5ONtE?version
+  if (u.pathname.startsWith("/embed"))
+    return u.pathname.split("/").filter((x) => x !== "")[1];
+
+  // FIXME: Should I throw if the url can't be parsed?
+  return query;
+};
+
+export const parseYoutubeChannel = (query: string): string => {
+  if (query.startsWith("http")) {
+    const u = new URL(query);
+    return u.pathname.replace(/^\//, "").replace(/\/$/, "").split("/")[1];
+  }
+  return query;
 };
 
 export const normalizeYoutubeVideoUrl = (url: string): string => {
