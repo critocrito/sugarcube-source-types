@@ -11,7 +11,7 @@
     "compile": "yarn compile:src && yarn compile:types",
     "compile:src": "cross-env NODE_ENV=production babel --verbose -x .ts -s inline -d dist src",
     "compile:types": "cross-env NODE_ENV=production tsc --project tsconfig.types.json",
-    "compile:watch": "yarn compile -w",
+    "compile:watch": "yarn compile:src -w",
     "fix": "yarn lint --fix",
     "lint": "eslint --cache --ext .js,.ts src test",
     "test": "ava --verbose",
@@ -19,7 +19,8 @@
     "test:watch": "yarn test --watch",
     "type-check": "tsc --noEmit",
     "type-check:watch": "yarn type-check -w",
-    "verify": "yarn lint && yarn type-check && yarn test"
+    "verify": "yarn lint && yarn type-check && yarn test",
+    "watch": "concurrently --kill-others \"yarn compile:src -w\" \"entr src | yarn compile:types\" \"yarn test:watch\" \"yarn type-check:watch\" \"entr src | yarn lint\""
   },
   "devDependencies": {
     "@ava/babel": "^1.0.1",
@@ -32,6 +33,7 @@
     "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@typescript-eslint/parser": "^3.6.1",
     "ava": "^3.10.1",
+    "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.4.0",
     "eslint-config-airbnb-typescript": "^8.0.2",
@@ -59,8 +61,8 @@
       "ts-node/register/transpile-only"
     ],
     "files": [
-      "test/**/*",
-      "test/helpers/**/*"
+      "test/**",
+      "!test/{helpers,fixtures}/**"
     ],
     "ignoredByWatcher": [
       "{dist,coverage,doc,resources,scripts}/**"
