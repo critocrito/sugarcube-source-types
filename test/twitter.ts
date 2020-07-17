@@ -9,20 +9,11 @@ import {
   parseTweetId,
   parseTwitterUser,
 } from "../src";
-
-const tweetUrls = [
-  "https://twitter.com/Ibrahim_waza/status/1073152537400934400",
-  "https://twitter.com/LorianSynaro/status/1101881275558825985/photo/1",
-  "https://mobile.twitter.com/kamalrahmtalla1/status/1150487367037440000?fbclid=IwAR2429sTkE",
-  "https://twitter.com/i/status/1101499653441372160",
-];
-
-const notTweetUrls = [
-  "https://tweetdeck.twitter.com/",
-  "https://twitter.com/search?q=%23موكب14مارس&src=hash",
-];
-
-const feedUrls = ["https://twitter.com/WADHOSHA"];
+import {
+  notTwitterTweetUrls,
+  twitterFeedUrls,
+  twitterTweetUrls,
+} from "./helpers/fixtures";
 
 test("twitter: can parse a regular id string", (t) => {
   const tweetId = "990930831148572672";
@@ -89,19 +80,19 @@ test("twitter: can parse a full url", (t) => {
 });
 
 test("twitter: can parse tweet urls", (t) => {
-  const result = every(isTwitterTweet, tweetUrls);
+  const result = every(isTwitterTweet, twitterTweetUrls);
 
   t.true(result);
 });
 
 test("twitter: fails similar tweet urls", (t) => {
-  const result = every(isTwitterTweet, notTweetUrls);
+  const result = every(isTwitterTweet, notTwitterTweetUrls);
 
   t.false(result);
 });
 
 test("twitter: fails feed urls", (t) => {
-  const result = every(isTwitterTweet, feedUrls);
+  const result = every(isTwitterTweet, twitterFeedUrls);
 
   t.false(result);
 });
@@ -132,13 +123,16 @@ test("twitter: can normalize tweet ids", (t) => {
 });
 
 test("twitter: can parse feed urls", (t) => {
-  const result = every(isTwitterFeed, feedUrls);
+  const result = every(isTwitterFeed, twitterFeedUrls);
 
   t.true(result);
 });
 
 test("twitter: fails to parse feed urls", (t) => {
-  const result = every(isTwitterFeed, tweetUrls.concat(notTweetUrls));
+  const result = every(
+    isTwitterFeed,
+    twitterTweetUrls.concat(notTwitterTweetUrls),
+  );
 
   t.false(result);
 });
