@@ -9,20 +9,11 @@ import {
   parseYoutubeChannel,
   parseYoutubeVideo,
 } from "../src";
-
-const videoUrls = [
-  "https://www.youtube.com/watch?v=tcCBtSjKEzI",
-  "http://youtu.be/o0tjic523cg",
-  "https://www.youtube.com/embed/iq_XLq5ONtE?version",
-];
-
-const notVideoUrls = [
-  "https://www.youtube.com/results?search_query=sudan%27s+livestream+Massacre",
-];
-
-const channelUrls = [
-  "https://www.youtube.com/channel/UCegnDJbvrOhvbLU3IzeIV8A",
-];
+import {
+  notYoutubeVideoUrls,
+  youtubeChannelUrls,
+  youtubeVideoUrls,
+} from "./helpers/fixtures";
 
 test("youtube: can parse the video id from a video id", (t) => {
   const videoId = "gui_SE8rJUM";
@@ -85,19 +76,19 @@ test("youtube: can parse the channel id from a channel url", (t) => {
 );
 
 test("youtube: can parse video urls", (t) => {
-  const result = every(isYoutubeVideo, videoUrls);
+  const result = every(isYoutubeVideo, youtubeVideoUrls);
 
   t.true(result);
 });
 
 test("youtube: fails similar video urls", (t) => {
-  const result = every(isYoutubeVideo, notVideoUrls);
+  const result = every(isYoutubeVideo, notYoutubeVideoUrls);
 
   t.false(result);
 });
 
 test("youtube: fails channel urls", (t) => {
-  const result = every(isYoutubeVideo, channelUrls);
+  const result = every(isYoutubeVideo, youtubeChannelUrls);
 
   t.false(result);
 });
@@ -116,13 +107,16 @@ test("youtube: can normalize video urls", (t) => {
 });
 
 test("youtube: can parse channel urls", (t) => {
-  const result = every(isYoutubeChannel, channelUrls);
+  const result = every(isYoutubeChannel, youtubeChannelUrls);
 
   t.true(result);
 });
 
 test("youtube: fails to parse video urls", (t) => {
-  const result = every(isYoutubeChannel, videoUrls.concat(notVideoUrls));
+  const result = every(
+    isYoutubeChannel,
+    youtubeVideoUrls.concat(notYoutubeVideoUrls),
+  );
 
   t.false(result);
 });
