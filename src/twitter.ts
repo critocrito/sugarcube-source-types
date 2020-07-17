@@ -26,8 +26,7 @@ export const isTwitterFeed = (url: string | null | undefined): boolean => {
 };
 
 export const parseTweetId = (id: string | void): string | undefined => {
-  if (id === undefined) return undefined;
-  if (typeof id !== "string") return undefined;
+  if (!isString(id)) return undefined;
   if (id.startsWith("http")) {
     const u = new URL(id);
     return u.pathname.split("/").filter((x) => x !== "")[2];
