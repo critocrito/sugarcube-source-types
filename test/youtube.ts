@@ -10,7 +10,7 @@ import {
   parseYoutubeVideo,
 } from "../src";
 import {
-  notYoutubeVideoUrls,
+  notYoutubeVideos,
   youtubeChannels,
   youtubeVideos,
 } from "./helpers/fixtures";
@@ -82,7 +82,7 @@ test("youtube: can parse video urls", (t) => {
 });
 
 test("youtube: fails similar video urls", (t) => {
-  const result = every(isYoutubeVideo, notYoutubeVideoUrls);
+  const result = every(isYoutubeVideo, notYoutubeVideos);
 
   t.false(result);
 });
@@ -102,7 +102,7 @@ test("youtube: can parse channel urls", (t) => {
 test("youtube: fails to parse video urls", (t) => {
   const result = every(
     isYoutubeChannel,
-    youtubeVideos.concat(notYoutubeVideoUrls),
+    youtubeVideos.concat(notYoutubeVideos),
   );
 
   t.false(result);

@@ -10,9 +10,9 @@ import {
   parseTwitterUser,
 } from "../src";
 import {
-  notTwitterTweetUrls,
-  twitterFeedUrls,
-  twitterTweetUrls,
+  notTwitterTweets,
+  twitterFeeds,
+  twitterTweets,
 } from "./helpers/fixtures";
 
 test("twitter: can parse a regular id string", (t) => {
@@ -80,19 +80,19 @@ test("twitter: can parse a full url", (t) => {
 });
 
 test("twitter: can parse tweet urls", (t) => {
-  const result = every(isTwitterTweet, twitterTweetUrls);
+  const result = every(isTwitterTweet, twitterTweets);
 
   t.true(result);
 });
 
 test("twitter: fails similar tweet urls", (t) => {
-  const result = every(isTwitterTweet, notTwitterTweetUrls);
+  const result = every(isTwitterTweet, notTwitterTweets);
 
   t.false(result);
 });
 
 test("twitter: fails feed urls", (t) => {
-  const result = every(isTwitterTweet, twitterFeedUrls);
+  const result = every(isTwitterTweet, twitterFeeds);
 
   t.false(result);
 });
@@ -123,16 +123,13 @@ test("twitter: can normalize tweet ids", (t) => {
 });
 
 test("twitter: can parse feed urls", (t) => {
-  const result = every(isTwitterFeed, twitterFeedUrls);
+  const result = every(isTwitterFeed, twitterFeeds);
 
   t.true(result);
 });
 
 test("twitter: fails to parse feed urls", (t) => {
-  const result = every(
-    isTwitterFeed,
-    twitterTweetUrls.concat(notTwitterTweetUrls),
-  );
+  const result = every(isTwitterFeed, twitterTweets.concat(notTwitterTweets));
 
   t.false(result);
 });

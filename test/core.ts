@@ -3,10 +3,10 @@ import {every, flow, isEqual} from "lodash/fp";
 
 import {sourceType} from "../src";
 import {
-  notTwitterTweetUrls,
-  notYoutubeVideoUrls,
-  twitterFeedUrls,
-  twitterTweetUrls,
+  notTwitterTweets,
+  notYoutubeVideos,
+  twitterFeeds,
+  twitterTweets,
   youtubeChannels,
   youtubeVideos,
 } from "./helpers/fixtures";
@@ -26,19 +26,19 @@ test("can determine Youtube channel urls", (t) => {
 test("can determine Twitter tweet urls", (t) => {
   const matchTwitterTweet = flow([sourceType, isEqual("twitter_tweet")]);
 
-  t.true(every(matchTwitterTweet, twitterTweetUrls));
+  t.true(every(matchTwitterTweet, twitterTweets));
 });
 
 test("can determine Twitter feed urls", (t) => {
   const matchTwitterFeed = flow([sourceType, isEqual("twitter_user")]);
 
-  t.true(every(matchTwitterFeed, twitterFeedUrls));
+  t.true(every(matchTwitterFeed, twitterFeeds));
 });
 
 test("ignores invalid urls", (t) => {
   const matchUrl = flow([sourceType, isEqual(undefined)]);
 
-  t.true(every(matchUrl, notYoutubeVideoUrls.concat(notTwitterTweetUrls)));
+  t.true(every(matchUrl, notYoutubeVideos.concat(notTwitterTweets)));
 });
 
 test("ignore undefined values", (t) => {
