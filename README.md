@@ -123,19 +123,67 @@ isYoutubeChannel :: (term?: string) -> boolean
 
 ### `parseTweetId`
 
+Extract a tweet id from a term.
+
+```
+parseTweetId :: (term?: string) -> string | undefined
+```
+
 ### `parseTwitterUser`
+
+Extract a Twitter user name from a term.
+
+```
+parseTwitterUser :: (term?: string) -> string | undefined
+```
 
 ### `parseYoutubeVideo`
 
+Extract a Youtube video id from a term.
+
+```
+parseYoutubeVideo :: (term?: string) -> string | undefined
+```
+
 ### `parseYoutubeChannel`
+
+Extract a Youtube channel id from a term.
+
+```
+parseYoutubeChannel :: (term?: string) -> string | undefined
+```
 
 ### `normalizeTwitterTweetUrl`
 
+Parse a Twitter tweet id from a term and return a normalized Twitter tweet URL.
+
+```
+normalizeTwitterTweetUrl :: (term?: string) -> string | undefined
+```
+
 ### `normalizeTwitterUserUrl`
+
+Parse a Twitter user name from a term and return a normalized Twitter feed URL.
+
+```
+normalizeTwitterUserUrl :: (term?: string) -> string | undefined
+```
 
 ### `normalizeYoutubeVideoUrl`
 
+Parse a Youtube Video id from a term and return a normalized Youtube video URL.
+
+```
+normalizeYoutubeVideoUrl :: (term?: string) -> string | undefined
+```
+
 ### `normalizeYoutubeChannelUrl`
+
+Parse a Youtube channel id from a term and return a normalized Youtube channel URL.
+
+```
+normalizeYoutubeChannelUrl :: (term?: string) -> string | undefined
+```
 
 ## License
 
