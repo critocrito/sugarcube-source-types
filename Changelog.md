@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](http://critocrito///compare/v0.1.1...v0.1.2) (2020-07-18)
+
+
+### Features
+
+* handle http_url source types ([3e0fe2f](http://critocrito///commit/3e0fe2fe5a086224a21b4a1d3901823e5f0e398b))
+
 ### 0.1.1 (2020-07-17)
 
 
