@@ -15,7 +15,7 @@ import {
   twitterTweets,
 } from "./helpers/fixtures";
 
-test("twitter: can parse a regular id string", (t) => {
+test("can parse a regular id string", (t) => {
   const result = every(
     (u) => parseTweetId(u) === "1073152537400934400",
     twitterTweets,
@@ -24,13 +24,13 @@ test("twitter: can parse a regular id string", (t) => {
   t.true(result);
 });
 
-test("twitter: ignore non twitter URLS when parsing tweet ids", (t) => {
+test("ignore non twitter URLS when parsing tweet ids", (t) => {
   const result = parseTweetId("http://example.com/tweet");
 
   t.is(result, undefined);
 });
 
-test("twitter: fails to parse tweet ids when id is invalid", (t) => {
+test("fails to parse tweet ids when id is invalid", (t) => {
   // eslint-disable-next-line unicorn/no-null
   const tweetIds = ["gibberish", undefined, null];
 
@@ -39,7 +39,7 @@ test("twitter: fails to parse tweet ids when id is invalid", (t) => {
   t.true(result);
 });
 
-test("twitter: can parse a user name", (t) => {
+test("can parse a user name", (t) => {
   const userNames = ["my_user", "@my_user", "https://twitter.com/my_user"];
   const expected = "my_user";
 
@@ -49,7 +49,7 @@ test("twitter: can parse a user name", (t) => {
   });
 });
 
-test("twitter: can parse a user id", (t) => {
+test("can parse a user id", (t) => {
   const userNames = [3067493325, "3067493325"];
   const expected = "3067493325";
 
@@ -59,25 +59,25 @@ test("twitter: can parse a user id", (t) => {
   });
 });
 
-test("twitter: can check tweet urls", (t) => {
+test("can check tweet urls", (t) => {
   const result = every(isTwitterTweet, twitterTweets);
 
   t.true(result);
 });
 
-test("twitter: fails non tweet urls", (t) => {
+test("fails non tweet urls", (t) => {
   const result = every(isTwitterTweet, notTwitterTweets);
 
   t.false(result);
 });
 
-test("twitter: fails non feed urls", (t) => {
+test("fails non feed urls", (t) => {
   const result = every(isTwitterTweet, twitterFeeds);
 
   t.false(result);
 });
 
-test("twitter: fails the predicate on undefined tweets", (t) => {
+test("fails the predicate on undefined tweets", (t) => {
   // eslint-disable-next-line unicorn/no-null
   t.false(every(isTwitterTweet, ["gibberish", undefined, null]));
 });
@@ -85,19 +85,19 @@ test("twitter: fails the predicate on undefined tweets", (t) => {
 /*
  * Twitter Feeds Predicate: isTwitterFeed
  */
-test("twitter: feed predicate succeeds on feed urls", (t) => {
+test("feed predicate succeeds on feed urls", (t) => {
   const result = every(isTwitterFeed, twitterFeeds);
 
   t.true(result);
 });
 
-test("twitter: tweet predicate fails on feed urls", (t) => {
+test("tweet predicate fails on feed urls", (t) => {
   const result = every(isTwitterFeed, twitterTweets.concat(notTwitterTweets));
 
   t.false(result);
 });
 
-test("twitter: feed predicate on undefined feed", (t) => {
+test("feed predicate on undefined feed", (t) => {
   // eslint-disable-next-line unicorn/no-null
   t.false(every(isTwitterFeed, [undefined, null]));
 });
@@ -105,7 +105,7 @@ test("twitter: feed predicate on undefined feed", (t) => {
 /*
  * Normalize Tweet Urls: normalizeTwitterTweetUrl
  */
-test("twitter: can normalize tweet urls", (t) => {
+test("can normalize tweet urls", (t) => {
   const urls = [
     "https://twitter.com/Ibrahim_waza/status/1073152537400934400",
     "https://twitter.com/Ibrahim_waza/status/1073152537400934400/photo/1",
@@ -120,7 +120,7 @@ test("twitter: can normalize tweet urls", (t) => {
   t.true(result);
 });
 
-test("twitter: can normalize tweet ids", (t) => {
+test("can normalize tweet ids", (t) => {
   const terms = [
     "https://twitter.com/i/status/1073152537400934400",
     "1073152537400934400",
@@ -133,7 +133,7 @@ test("twitter: can normalize tweet ids", (t) => {
   t.true(result);
 });
 
-test("twitter: fail to normalize invalid tweet inputs", (t) => {
+test("fail to normalize invalid tweet inputs", (t) => {
   // eslint-disable-next-line unicorn/no-null
   const invalidUrls = [undefined, null];
 
@@ -148,7 +148,7 @@ test("twitter: fail to normalize invalid tweet inputs", (t) => {
 /*
  * Normalize User Urls: normalizeTwitterUserUrl
  */
-test("twitter: can normalize user urls", (t) => {
+test("can normalize user urls", (t) => {
   const urls = ["https://twitter.com/WADHOSHA", "WADHOSHA", "@WADHOSHA"];
 
   const expected = "https://twitter.com/WADHOSHA";
@@ -158,7 +158,7 @@ test("twitter: can normalize user urls", (t) => {
   t.true(result);
 });
 
-test("twitter: fail to normalize invalid user inputs", (t) => {
+test("fail to normalize invalid user inputs", (t) => {
   // eslint-disable-next-line unicorn/no-null
   const invalidUrls = [undefined, null];
 

@@ -15,7 +15,7 @@ import {
   youtubeVideos,
 } from "./helpers/fixtures";
 
-test("youtube: can parse the video id from a video id", (t) => {
+test("can parse the video id from a video id", (t) => {
   const videoId = "gui_SE8rJUM";
 
   const expected = videoId;
@@ -24,7 +24,7 @@ test("youtube: can parse the video id from a video id", (t) => {
   t.is(result, expected);
 });
 
-test("youtube: can parse the video id from a video url", (t) => {
+test("can parse the video id from a video url", (t) => {
   const videoUrl = "https://www.youtube.com/watch?v=gui_SE8rJUM";
 
   const expected = "gui_SE8rJUM";
@@ -33,7 +33,7 @@ test("youtube: can parse the video id from a video url", (t) => {
   t.is(result, expected);
 });
 
-test("youtube: can parse the video id from an embedded video url", (t) => {
+test("can parse the video id from an embedded video url", (t) => {
   const videoUrl = "https://www.youtube.com/embed/gui_SE8rJUM?version";
   const videoId = "gui_SE8rJUM";
 
@@ -43,7 +43,7 @@ test("youtube: can parse the video id from an embedded video url", (t) => {
   t.is(result, expected);
 });
 
-test("youtube: can parse the channel id from a channel id", (t) => {
+test("can parse the channel id from a channel id", (t) => {
   const channelId = "UC_QIfHvN9auy2CoOdSfMWDw";
 
   const expected = channelId;
@@ -52,7 +52,7 @@ test("youtube: can parse the channel id from a channel id", (t) => {
   t.is(result, expected);
 });
 
-test("youtube: can parse the channel id from a channel url", (t) => {
+test("can parse the channel id from a channel url", (t) => {
   const channelUrl = "https://www.youtube.com/channel/UC_QIfHvN9auy2CoOdSfMWDw";
   const channelId = "UC_QIfHvN9auy2CoOdSfMWDw";
 
@@ -64,7 +64,7 @@ test("youtube: can parse the channel id from a channel url", (t) => {
 
 ["featured", "videos", "playlists", "community", "channels", "about"].forEach(
   (segment) =>
-    test(`youtube: can parse the channel id from a channel url with the '${segment}' path segment`, (t) => {
+    test(`can parse the channel id from a channel url with the '${segment}' path segment`, (t) => {
       const channelUrl = `https://www.youtube.com/channel/UC_QIfHvN9auy2CoOdSfMWDw/${segment}`;
       const channelId = "UC_QIfHvN9auy2CoOdSfMWDw";
 
@@ -75,31 +75,31 @@ test("youtube: can parse the channel id from a channel url", (t) => {
     }),
 );
 
-test("youtube: can parse video urls", (t) => {
+test("can parse video urls", (t) => {
   const result = every(isYoutubeVideo, youtubeVideos);
 
   t.true(result);
 });
 
-test("youtube: fails similar video urls", (t) => {
+test("fails similar video urls", (t) => {
   const result = every(isYoutubeVideo, notYoutubeVideos);
 
   t.false(result);
 });
 
-test("youtube: fails channel urls", (t) => {
+test("fails channel urls", (t) => {
   const result = every(isYoutubeVideo, youtubeChannels);
 
   t.false(result);
 });
 
-test("youtube: can parse channel urls", (t) => {
+test("can parse channel urls", (t) => {
   const result = every(isYoutubeChannel, youtubeChannels);
 
   t.true(result);
 });
 
-test("youtube: fails to parse video urls", (t) => {
+test("fails to parse video urls", (t) => {
   const result = every(
     isYoutubeChannel,
     youtubeVideos.concat(notYoutubeVideos),
@@ -108,17 +108,17 @@ test("youtube: fails to parse video urls", (t) => {
   t.false(result);
 });
 
-test("youtube: returns false on undefined video", (t) => {
+test("returns false on undefined video", (t) => {
   // eslint-disable-next-line unicorn/no-null
   t.false(every(isYoutubeVideo, [undefined, null]));
 });
 
-test("youtube: returns false on undefined channel", (t) => {
+test("returns false on undefined channel", (t) => {
   // eslint-disable-next-line unicorn/no-null
   t.false(every(isYoutubeChannel, [undefined, null]));
 });
 
-test("youtube: can normalize video urls", (t) => {
+test("can normalize video urls", (t) => {
   const urls = [
     "https://www.youtube.com/watch?v=tcCBtSjKEzI",
     "http://youtu.be/tcCBtSjKEzI",
@@ -131,7 +131,7 @@ test("youtube: can normalize video urls", (t) => {
   t.true(result);
 });
 
-test("youtube: can normalize channel urls", (t) => {
+test("can normalize channel urls", (t) => {
   const urls = [
     "https://www.youtube.com/channel/UCegnDJbvrOhvbLU3IzeIV8A",
     "UCegnDJbvrOhvbLU3IzeIV8A",
@@ -144,7 +144,7 @@ test("youtube: can normalize channel urls", (t) => {
   t.true(result);
 });
 
-test("youtube: fail to normalize invalid channel inputs", (t) => {
+test("fail to normalize invalid channel inputs", (t) => {
   // eslint-disable-next-line unicorn/no-null
   const invalidUrls = ["gibberish", undefined, null];
 
@@ -156,7 +156,7 @@ test("youtube: fail to normalize invalid channel inputs", (t) => {
   t.true(result);
 });
 
-test("youtube: fail to normalize invalid video inputs", (t) => {
+test("fail to normalize invalid video inputs", (t) => {
   // eslint-disable-next-line unicorn/no-null
   const invalidUrls = ["gibberish", undefined, null];
 
