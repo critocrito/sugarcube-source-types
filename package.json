@@ -21,7 +21,7 @@
     "prepublishOnly": "yarn build",
     "prerelease": "yarn build",
     "release": "standard-version -i Changelog.md -m \"chore(release): bumped to version %s\" --sign",
-    "test": "ava --verbose",
+    "test": "ava",
     "test:coverage": "nyc ava",
     "test:watch": "yarn test --watch",
     "type-check": "tsc --noEmit",
