@@ -28,3 +28,18 @@ export const notTwitterTweets = [
   "https://tweetdeck.twitter.com/",
   "https://twitter.com/search?q=%23موكب14مارس&src=hash",
 ];
+
+export const httpUrls = [
+  "https://example.org/path/segment?query=param",
+  "http://example.org/path/segment?query=param",
+  "https://example.org/?query",
+];
+
+export const notHttpUrls = [
+  // eslint-disable-next-line unicorn/no-null
+  null,
+  undefined,
+  "giberish",
+  "localhost:2345/a/path/segment",
+  "ftp://example.org/path/to/file",
+];

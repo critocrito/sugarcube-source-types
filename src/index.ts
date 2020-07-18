@@ -1,3 +1,4 @@
+import * as http from "./http";
 import * as twitter from "./twitter";
 import * as youtube from "./youtube";
 
@@ -5,7 +6,8 @@ type SourceType =
   | "youtube_video"
   | "youtube_channel"
   | "twitter_tweet"
-  | "twitter_user";
+  | "twitter_user"
+  | "http_url";
 
 export const sourceType = (term?: string | null): SourceType | undefined => {
   switch (true) {
@@ -21,6 +23,9 @@ export const sourceType = (term?: string | null): SourceType | undefined => {
     case twitter.isTwitterFeed(term):
       return "twitter_user";
 
+    case http.isHttpUrl(term):
+      return "http_url";
+
     default:
       return undefined;
   }
@@ -28,3 +33,4 @@ export const sourceType = (term?: string | null): SourceType | undefined => {
 
 export * from "./youtube";
 export * from "./twitter";
+export * from "./http";

@@ -3,8 +3,7 @@ import {every, flow, isEqual} from "lodash/fp";
 
 import {sourceType} from "../src";
 import {
-  notTwitterTweets,
-  notYoutubeVideos,
+  httpUrls,
   twitterFeeds,
   twitterTweets,
   youtubeChannels,
@@ -35,15 +34,15 @@ test("can determine Twitter feed urls", (t) => {
   t.true(every(matchTwitterFeed, twitterFeeds));
 });
 
-test("ignores invalid urls", (t) => {
-  const matchUrl = flow([sourceType, isEqual(undefined)]);
-
-  t.true(every(matchUrl, notYoutubeVideos.concat(notTwitterTweets)));
-});
-
 test("ignore undefined values", (t) => {
   const matchUrl = flow([sourceType, isEqual(undefined)]);
 
   // eslint-disable-next-line unicorn/no-null
   t.true(every(matchUrl, [undefined, null]));
+});
+
+test("can determine HTTP urls", (t) => {
+  const matchHttpUrl = flow([sourceType, isEqual("http_url")]);
+
+  t.true(every(matchHttpUrl, httpUrls));
 });

@@ -51,6 +51,7 @@ sourceType("https://youtube.com/watch?v=wer23edsa"); // youtube_video
 - [`isTwitterFeed`: Determine if a term is a valid Twitter feed.](#istwitterfeed)
 - [`isYoutubeVideo`: Determine if a term is a valid Youtube video.](#isyoutubevideo)
 - [`isYoutubeChannel`: Determine if a term is a valid Youtube channel.](#isyoutubechannel)
+- [`isHttpUrl`: Determine if a term is a valid HTTP url.](#ishttpurl)
 
 </details>
 
@@ -59,7 +60,8 @@ sourceType("https://youtube.com/watch?v=wer23edsa"); // youtube_video
 - [`parseTweetId`: Extract a tweet id from a term.](#parsetweetid)
 - [`parseTwitterUser`: Extract a Twitter user from a term.](#parsetwitteruser)
 - [`parseYoutubeVideo`: Extract a Youtube video id from a term.](#parseyoutubevideo)
-- [`parseYoutubeChannel`: extract a Youtube channel id from a term.](#parseyoutubechannel)
+- [`parseYoutubeChannel`: Extract a Youtube channel id from a term.](#parseyoutubechannel)
+- [`parseHttpUrl`: Parse a term into a valid HTTP url.](#parsehttpurl)
 
 </details>
 
@@ -69,6 +71,7 @@ sourceType("https://youtube.com/watch?v=wer23edsa"); // youtube_video
 - [`normalizeTwitterUserUrl`: Turn a term into a normalized Twitter feed URL.](#normalizetwitteruserurl)
 - [`normalizeYoutubeVideoUrl`: Turn a term into a normalized Youtube video URL.](#normalizeyoutubevideourl)
 - [`normalizeYoutubeChannelUrl`: Turn a term into a normalized Youtube channel URL.](#normalizeyoutubechannelurl)
+- [`normalizeHttpUrl`: Turn a term into a normalized HTTP url.](#normalizehttpurl)
 
 </details>
 
@@ -80,6 +83,7 @@ A string literal type containig valid source types.
 - `twitter_channel`
 - `youtube_video`
 - `youtube_channel`
+- `http_url`
 
 ### `sourceType`
 
@@ -121,6 +125,14 @@ Check if a term is a valid Youtube channel.
 isYoutubeChannel :: (term?: string) -> boolean
 ```
 
+### `isHttpUrl`
+
+Check if a term is a valid HTTP url.
+
+```
+isHttpUrl :: (term?: string) -> boolean
+```
+
 ### `parseTweetId`
 
 Extract a tweet id from a term.
@@ -153,6 +165,14 @@ Extract a Youtube channel id from a term.
 parseYoutubeChannel :: (term?: string) -> string | undefined
 ```
 
+### `parseHttpUrl`
+
+Parse a term and return a HTTP url.
+
+```
+parseHttpUrl :: (term?: string) -> string | undefined
+```
+
 ### `normalizeTwitterTweetUrl`
 
 Parse a Twitter tweet id from a term and return a normalized Twitter tweet URL.
@@ -183,6 +203,14 @@ Parse a Youtube channel id from a term and return a normalized Youtube channel U
 
 ```
 normalizeYoutubeChannelUrl :: (term?: string) -> string | undefined
+```
+
+### `normalizeHttpUrl`
+
+Turn a term into a well formed HTTP url.
+
+```
+normalizeHttpUrl :: (term?: string) -> string | undefined
 ```
 
 ## License
