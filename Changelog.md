@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](http://critocrito///compare/v0.1.3...v0.1.4) (2020-07-19)
+
+
+### Bug Fixes
+
+* rely on global URL object ([1ec4c51](http://critocrito///commit/1ec4c51872b69891e3fc3063e2844c4d749e17ec))
+
 ### [0.1.3](http://critocrito///compare/v0.1.2...v0.1.3) (2020-07-18)
 
 ### [0.1.2](http://critocrito///compare/v0.1.1...v0.1.2) (2020-07-18)
