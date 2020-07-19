@@ -1,5 +1,3 @@
-import {URL} from "url";
-
 import {isString} from "./utils";
 
 export const parseHttpUrl = (term?: string | null): string | undefined => {

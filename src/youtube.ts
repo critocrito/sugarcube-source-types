@@ -1,5 +1,3 @@
-import {URL} from "url";
-
 import {isString, segment} from "./utils";
 
 export const parseYoutubeVideo = (term?: string | null): string | undefined => {

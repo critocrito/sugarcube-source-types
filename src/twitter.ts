@@ -1,5 +1,3 @@
-import {URL} from "url";
-
 import {isNumber, isString, segment} from "./utils";
 
 export const parseTweetId = (term?: string | null): string | undefined => {
