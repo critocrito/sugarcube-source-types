@@ -1,5 +1,7 @@
 !.keep
 dist
+es6
+lib
 
 # Annoying macOS artifacts
 .DS_Store

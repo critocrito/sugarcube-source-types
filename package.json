@@ -4,6 +4,8 @@
   "author": "Christo <christo@cryptodrunks.net>",
   "version": "0.1.3",
   "main": "dist/index.js",
+  "module": "es6/index.js",
+  "browser": "lib/index.js",
   "files": [
     "dist",
     "src"
@@ -12,8 +14,10 @@
     "build": "yarn verify && yarn compile",
     "clean": "rimraf dist",
     "precompile": "yarn clean",
-    "compile": "yarn compile:src && yarn compile:types",
-    "compile:src": "cross-env NODE_ENV=production babel --verbose -x .ts -s inline -d dist src",
+    "compile": "yarn compile:src && yarn compile:module && yarn compile:browser && yarn compile:types",
+    "compile:browser": "cross-env BABEL_ENV=browser babel --verbose -x .ts -s -d lib src",
+    "compile:module": "cross-env BABEL_ENV=module babel --verbose -x .ts -s inline -d es6 src",
+    "compile:src": "babel --verbose -x .ts -s inline -d dist src",
     "compile:types": "cross-env NODE_ENV=production tsc --project tsconfig.types.json",
     "compile:watch": "yarn compile:src -w",
     "fix": "yarn lint --fix",
@@ -29,6 +33,7 @@
     "verify": "yarn lint && yarn type-check && yarn test",
     "watch": "concurrently --kill-others \"yarn compile:src -w\" \"entr src | yarn compile:types\" \"yarn test:watch\" \"yarn type-check:watch\" \"entr src | yarn lint\""
   },
+  "types": "dist/index.d.ts",
   "devDependencies": {
     "@ava/babel": "^1.0.1",
     "@babel/cli": "^7.10.5",
@@ -86,17 +91,49 @@
     }
   },
   "babel": {
-    "presets": [
-      [
-        "@babel/env",
-        {
-          "targets": {
-            "node": "12"
-          }
-        }
-      ],
-      "@babel/typescript"
-    ]
+    "env": {
+      "development": {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "node": "12"
+              }
+            }
+          ],
+          "@babel/typescript"
+        ]
+      },
+      "browser": {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "browsers": "last 2 versions, ie 10-11"
+              },
+              "modules": false
+            }
+          ],
+          "@babel/typescript"
+        ]
+      },
+      "module": {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "node": "12"
+              },
+              "modules": false
+            }
+          ],
+          "@babel/typescript"
+        ]
+      }
+    }
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
