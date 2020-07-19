@@ -8,6 +8,8 @@
   "browser": "lib/index.js",
   "files": [
     "dist",
+    "es6",
+    "lib",
     "src"
   ],
   "scripts": {
