@@ -17,6 +17,9 @@ export const parseYoutubeVideo = (term?: string | null): string | undefined => {
     if (u.pathname.startsWith("/embed")) return segment(1, u);
   }
 
+  // Has incidentally as well 11 characters
+  if (term === "about:blank") return undefined;
+
   // e.g. o0tjic523cg
   if (term.length === 11) return term;
 

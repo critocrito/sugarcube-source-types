@@ -12,6 +12,7 @@ export const youtubeChannels = [
 
 export const notYoutubeVideos = [
   "https://www.youtube.com/results?search_query=sudan%27s+livestream+Massacre",
+  "about:blank",
 ];
 
 export const twitterTweets = [

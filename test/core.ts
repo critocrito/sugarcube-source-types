@@ -4,6 +4,7 @@ import {every, flow, isEqual} from "lodash/fp";
 import {sourceType} from "../src";
 import {
   httpUrls,
+  notYoutubeVideos,
   twitterFeeds,
   twitterTweets,
   youtubeChannels,
@@ -14,6 +15,15 @@ test("can determine Youtube video urls", (t) => {
   const matchYoutubeVideo = flow([sourceType, isEqual("youtube_video")]);
 
   t.true(every(matchYoutubeVideo, youtubeVideos));
+});
+
+test("no false positives for Youtube video urls", (t) => {
+  const matchNotYoutubeVideo = flow([
+    sourceType,
+    (v): boolean => !isEqual("youtube_video", v),
+  ]);
+
+  t.true(every(matchNotYoutubeVideo, notYoutubeVideos));
 });
 
 test("can determine Youtube channel urls", (t) => {
