@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/critocrito/sugarcube-source-types/compare/v0.1.4...v0.1.5) (2020-08-10)
+
+
+### Bug Fixes
+
+* avoid false positives for commonly known bad terms ([57d2d7b](https://github.com/critocrito/sugarcube-source-types/commit/57d2d7b0959f75bf19e111d011ddf62e00f98c18))
+* avoid false youtube video for about:blank ([088544e](https://github.com/critocrito/sugarcube-source-types/commit/088544ecd2bc01e1d74082b5cc4b92b7b1a73c3c))
+
 ### [0.1.4](http://critocrito///compare/v0.1.3...v0.1.4) (2020-07-19)
 
 
