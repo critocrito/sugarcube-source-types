@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/critocrito/sugarcube-source-types/compare/v0.1.5...v0.1.6) (2020-08-10)
+
+
+### Features
+
+* verify that HTTP URL has a valid form ([623deb5](https://github.com/critocrito/sugarcube-source-types/commit/623deb5f49adbc3a0f0a43c7cbda0db78107e70b))
+
 ### [0.1.5](https://github.com/critocrito/sugarcube-source-types/compare/v0.1.4...v0.1.5) (2020-08-10)
 
 
