@@ -1,7 +1,9 @@
-import {isNumber, isString, segment} from "./utils";
+import {isIgnoredTerm, isNumber, isString, segment} from "./utils";
 
 export const parseTweetId = (term?: string | null): string | undefined => {
   if (!isString(term)) return undefined;
+  if (isIgnoredTerm(term)) return undefined;
+
   // /status/.test(u.pathname)) return true;
   if (term.startsWith("http")) {
     const u = new URL(term);
@@ -27,6 +29,7 @@ export const parseTwitterUser = (
   if (isNumber(term)) return term.toString();
 
   if (!isString(term)) return undefined;
+  if (isIgnoredTerm(term)) return undefined;
 
   if (term.startsWith("http")) {
     const u = new URL(term);

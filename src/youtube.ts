@@ -1,7 +1,8 @@
-import {isString, segment} from "./utils";
+import {isIgnoredTerm, isString, segment} from "./utils";
 
 export const parseYoutubeVideo = (term?: string | null): string | undefined => {
   if (!isString(term)) return undefined;
+  if (isIgnoredTerm(term)) return undefined;
 
   if (term.startsWith("http")) {
     const u = new URL(term);
@@ -17,9 +18,6 @@ export const parseYoutubeVideo = (term?: string | null): string | undefined => {
     if (u.pathname.startsWith("/embed")) return segment(1, u);
   }
 
-  // Has incidentally as well 11 characters
-  if (term === "about:blank") return undefined;
-
   // e.g. o0tjic523cg
   if (term.length === 11) return term;
 
@@ -30,6 +28,7 @@ export const parseYoutubeChannel = (
   term?: string | null,
 ): string | undefined => {
   if (!isString(term)) return undefined;
+  if (isIgnoredTerm(term)) return undefined;
 
   if (term.startsWith("http")) {
     const u = new URL(term);

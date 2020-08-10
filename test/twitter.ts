@@ -169,3 +169,12 @@ test("fail to normalize invalid user inputs", (t) => {
 
   t.true(result);
 });
+
+["", "about:blank", "about:newtab", "about:config"].forEach((term) => {
+  test(`ignore false positives: ${
+    term === "" ? "empty string" : term
+  }`, (t) => {
+    t.false(isTwitterTweet(term));
+    t.false(isTwitterFeed(term));
+  });
+});

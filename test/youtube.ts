@@ -167,3 +167,12 @@ test("fail to normalize invalid video inputs", (t) => {
 
   t.true(result);
 });
+
+["", "about:blank", "about:newtab", "about:config"].forEach((term) => {
+  test(`ignore false positives: ${
+    term === "" ? "empty string" : term
+  }`, (t) => {
+    t.false(isYoutubeVideo(term));
+    t.false(isYoutubeChannel(term));
+  });
+});

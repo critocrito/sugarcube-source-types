@@ -19,3 +19,9 @@ export const segment = (position: number, url: URL): string | undefined => {
 
   return segments[position];
 };
+
+export const isIgnoredTerm = (term: string): boolean => {
+  return ["", "about:blank", "about:newtab", "about:config"].some(
+    (t) => t === term,
+  );
+};
