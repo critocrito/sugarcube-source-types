@@ -1,7 +1,8 @@
-import {isString} from "./utils";
+import {isString, isValidUrl} from "./utils";
 
 export const parseHttpUrl = (term?: string | null): string | undefined => {
   if (!isString(term)) return undefined;
+  if (!isValidUrl(term)) return undefined;
 
   let u;
   try {

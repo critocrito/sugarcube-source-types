@@ -43,4 +43,5 @@ export const notHttpUrls = [
   "giberish",
   "localhost:2345/a/path/segment",
   "ftp://example.org/path/to/file",
+  "http://m",
 ];
