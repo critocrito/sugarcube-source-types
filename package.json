@@ -60,7 +60,7 @@
     "eslint-plugin-unicorn": "^20.1.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "prettier-package-json": "^2.1.3",
