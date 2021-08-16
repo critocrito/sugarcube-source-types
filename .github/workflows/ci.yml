@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [ master ]
+    branches: [main]
   pull_request:
-    branches: [ master ]
+    branches: [main]
 
 jobs:
   build:
@@ -14,39 +14,39 @@ jobs:
         node-version: [12.x, 14.x]
 
     steps:
-    - uses: actions/checkout@master
-    - name: Setup Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - uses: actions/checkout@master
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: yarn install
+      - name: Install dependencies
+        run: yarn install
 
-    - name: Build package
-      run: yarn build
+      - name: Build package
+        run: yarn build
 
   coverage:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Setup Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
+      - uses: actions/checkout@master
+      - name: Setup Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
 
-    - name: Install dependencies
-      run: yarn install
+      - name: Install dependencies
+        run: yarn install
 
-    - name: Run coverage tests
-      run: yarn test:coverage
+      - name: Run coverage tests
+        run: yarn test:coverage
 
-    - name: Generate report
-      run: ./node_modules/.bin/nyc report --reporter=json
+      - name: Generate report
+        run: ./node_modules/.bin/nyc report --reporter=json
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage/coverage-final.json
-        flags: unittest
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage/coverage-final.json
+          flags: unittest
