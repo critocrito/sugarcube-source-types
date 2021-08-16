@@ -50,6 +50,7 @@ test("can parse a user name", (t) => {
 });
 
 test("can parse a user id", (t) => {
+  // eslint-disable-next-line unicorn/numeric-separators-style
   const userNames = [3067493325, "3067493325"];
   const expected = "3067493325";
 
@@ -92,7 +93,7 @@ test("feed predicate succeeds on feed urls", (t) => {
 });
 
 test("tweet predicate fails on feed urls", (t) => {
-  const result = every(isTwitterFeed, twitterTweets.concat(notTwitterTweets));
+  const result = every(isTwitterFeed, [...twitterTweets, ...notTwitterTweets]);
 
   t.false(result);
 });

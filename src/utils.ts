@@ -21,9 +21,7 @@ export const segment = (position: number, url: URL): string | undefined => {
 };
 
 export const isIgnoredTerm = (term: string): boolean => {
-  return ["", "about:blank", "about:newtab", "about:config"].some(
-    (t) => t === term,
-  );
+  return ["", "about:blank", "about:newtab", "about:config"].includes(term);
 };
 
 export const isValidUrl = (term: string): boolean => {

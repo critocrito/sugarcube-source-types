@@ -31,6 +31,6 @@ export const sourceType = (term?: string | null): SourceType | undefined => {
   }
 };
 
-export * from "./youtube";
-export * from "./twitter";
 export * from "./http";
+export * from "./twitter";
+export * from "./youtube";

@@ -100,10 +100,10 @@ test("can parse channel urls", (t) => {
 });
 
 test("fails to parse video urls", (t) => {
-  const result = every(
-    isYoutubeChannel,
-    youtubeVideos.concat(notYoutubeVideos),
-  );
+  const result = every(isYoutubeChannel, [
+    ...youtubeVideos,
+    ...notYoutubeVideos,
+  ]);
 
   t.false(result);
 });
