@@ -26,7 +26,7 @@ export const isIgnoredTerm = (term: string): boolean => {
 
 export const isValidUrl = (term: string): boolean => {
   const res = term.match(
-    /(http(s)?:\/\/.)?(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
+    /(http(s)?:\/\/.)?(www\.)?[\w#%+.:=@~-]{1,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
   );
   return res !== null;
 };

@@ -1,7 +1,7 @@
 import test from "ava";
 import {URL} from "url";
 
-import {segment} from "../src/utils";
+import {isValidUrl, segment} from "../src/utils";
 
 test("select segments from an URL path", (t) => {
   const url = new URL("http://example.org/seg1/seg2/seg3");
@@ -24,4 +24,15 @@ test("handle url without a path", (t) => {
 
   t.is(segment(0, url), undefined);
   t.is(segment(3, url), undefined);
+});
+
+test("match valid URLs", (t) => {
+  ["http", "https"].forEach((proto) => {
+    ["t.me", "example.org"].forEach((url) => {
+      t.true(isValidUrl(`${proto}://${url}`));
+      t.true(isValidUrl(`${proto}://www.${url}`));
+      t.true(isValidUrl(`${proto}://${url}/path/segment?q=term`));
+      t.true(isValidUrl(`${proto}://www.${url}/path/segment?q=term`));
+    });
+  });
 });
