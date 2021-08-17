@@ -47,6 +47,7 @@ sourceType("https://youtube.com/watch?v=wer23edsa"); // youtube_video
 
 <details><summary>Source type predicates</summary>
 
+- [`isTelegramChannel`: Determine if a term is a valid Telegram channel.](#istelegramchannel)
 - [`isTwitterTweet`: Determine if a term is a valid Twitter tweet.](#istwittertweet)
 - [`isTwitterFeed`: Determine if a term is a valid Twitter feed.](#istwitterfeed)
 - [`isYoutubeVideo`: Determine if a term is a valid Youtube video.](#isyoutubevideo)
@@ -57,6 +58,7 @@ sourceType("https://youtube.com/watch?v=wer23edsa"); // youtube_video
 
 <details><summary>Source type parsers</summary>
 
+- [`parseTelegramChannel`: Extract a Telegram channel from a term.](#parsetelegramchannel)
 - [`parseTweetId`: Extract a tweet id from a term.](#parsetweetid)
 - [`parseTwitterUser`: Extract a Twitter user from a term.](#parsetwitteruser)
 - [`parseYoutubeVideo`: Extract a Youtube video id from a term.](#parseyoutubevideo)
@@ -67,6 +69,8 @@ sourceType("https://youtube.com/watch?v=wer23edsa"); // youtube_video
 
 <details><summary>Normalize terms</summary>
 
+- [`normalizeTelegramChannelUrl`: Turn a term into a normalized Telegram Channel
+  URL.](#normalizetelegramchannelurl)
 - [`normalizeTwitterTweetUrl`: Turn a term into a normalized Twitter tweet URL.](#normalizetwittertweeturl)
 - [`normalizeTwitterUserUrl`: Turn a term into a normalized Twitter feed URL.](#normalizetwitteruserurl)
 - [`normalizeYoutubeVideoUrl`: Turn a term into a normalized Youtube video URL.](#normalizeyoutubevideourl)
@@ -79,6 +83,7 @@ sourceType("https://youtube.com/watch?v=wer23edsa"); // youtube_video
 
 A string literal type containig valid source types.
 
+- `telegram_channel`
 - `twitter_tweet`
 - `twitter_channel`
 - `youtube_video`
@@ -91,6 +96,14 @@ Detect the type of a source.
 
 ```
 sourceType :: (term?: string) -> SourceType | undefined
+```
+
+### `isTelegramChannel`
+
+Check if a term is a valid Telegram channel.
+
+```
+isTelegramChannel :: (term?: string) -> boolean
 ```
 
 ### `isTwitterTweet`
@@ -133,6 +146,21 @@ Check if a term is a valid HTTP url.
 isHttpUrl :: (term?: string) -> boolean
 ```
 
+### `parseTelegramChannel`
+
+Extract a Telegram channel from a term.
+
+```
+parseTelegramChannel :: (term?: string) -> string | undefined
+```
+
+```javascript
+parseTelegramChannel("https://t.me/s/soscubamedia"); # soscubamedia
+parseTelegramChannel("https://t.me/soscubamedia"); # soscubamedia
+```
+
+Channel names in the form of `@soscubamedia` are not valid since they are ambiguous with Twitter user handlers.
+
 ### `parseTweetId`
 
 Extract a tweet id from a term.
@@ -171,6 +199,14 @@ Parse a term and return a HTTP url.
 
 ```
 parseHttpUrl :: (term?: string) -> string | undefined
+```
+
+### `normalizeTelegramChannelUrl`
+
+Parse a Telegram channel from a term and return a normalized Telegram channel URL.
+
+```
+normalizeTelegramChannelUrl :: (term?: string) -> string | undefined
 ```
 
 ### `normalizeTwitterTweetUrl`

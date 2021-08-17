@@ -1,3 +1,15 @@
+export const badInputs = [
+  // eslint-disable-next-line unicorn/no-null
+  null,
+  undefined,
+  "giberish",
+  "localhost:2345/a/path/segment",
+  "ftp://example.org/path/to/file",
+  "http://m",
+  "",
+  "about:blank",
+];
+
 export const youtubeVideos = [
   "https://www.youtube.com/watch?v=tcCBtSjKEzI",
   "http://youtu.be/o0tjic523cg",
@@ -11,8 +23,8 @@ export const youtubeChannels = [
 ];
 
 export const notYoutubeVideos = [
+  ...badInputs,
   "https://www.youtube.com/results?search_query=sudan%27s+livestream+Massacre",
-  "about:blank",
 ];
 
 export const twitterTweets = [
@@ -26,6 +38,7 @@ export const twitterTweets = [
 export const twitterFeeds = ["https://twitter.com/WADHOSHA"];
 
 export const notTwitterTweets = [
+  ...badInputs,
   "https://tweetdeck.twitter.com/",
   "https://twitter.com/search?q=%23موكب14مارس&src=hash",
 ];
@@ -36,12 +49,14 @@ export const httpUrls = [
   "https://example.org/?query",
 ];
 
-export const notHttpUrls = [
-  // eslint-disable-next-line unicorn/no-null
-  null,
-  undefined,
-  "giberish",
-  "localhost:2345/a/path/segment",
-  "ftp://example.org/path/to/file",
-  "http://m",
+export const notHttpUrls = badInputs;
+
+// FIXME: Telegram channel names starting with @ are ambiguous with twitter user
+//        names.
+export const telegramChannels = [
+  // "@soscubamedia",
+  "https://t.me/s/soscubamedia",
+  "https://t.me/s/soscubamedia",
 ];
+
+export const notTelegramChannels = badInputs;

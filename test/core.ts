@@ -4,7 +4,9 @@ import {every, flow, isEqual} from "lodash/fp";
 import {sourceType} from "../src";
 import {
   httpUrls,
+  notTelegramChannels,
   notYoutubeVideos,
+  telegramChannels,
   twitterFeeds,
   twitterTweets,
   youtubeChannels,
@@ -55,4 +57,19 @@ test("can determine HTTP urls", (t) => {
   const matchHttpUrl = flow([sourceType, isEqual("http_url")]);
 
   t.true(every(matchHttpUrl, httpUrls));
+});
+
+test("can determine Telegram channels", (t) => {
+  const matchTelegramChannel = flow([sourceType, isEqual("telegram_channel")]);
+
+  t.true(every(matchTelegramChannel, telegramChannels));
+});
+
+test("no false positives for Telegram channel urls", (t) => {
+  const matchNotTelegramChannel = flow([
+    sourceType,
+    (v): boolean => !isEqual("telegram_channel", v),
+  ]);
+
+  t.true(every(matchNotTelegramChannel, notTelegramChannels));
 });

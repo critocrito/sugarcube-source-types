@@ -1,13 +1,15 @@
 import * as http from "./http";
+import * as telegram from "./telegram";
 import * as twitter from "./twitter";
 import * as youtube from "./youtube";
 
 type SourceType =
-  | "youtube_video"
-  | "youtube_channel"
+  | "http_url"
+  | "telegram_channel"
   | "twitter_tweet"
   | "twitter_user"
-  | "http_url";
+  | "youtube_video"
+  | "youtube_channel";
 
 export const sourceType = (term?: string | null): SourceType | undefined => {
   switch (true) {
@@ -23,6 +25,9 @@ export const sourceType = (term?: string | null): SourceType | undefined => {
     case twitter.isTwitterFeed(term):
       return "twitter_user";
 
+    case telegram.isTelegramChannel(term):
+      return "telegram_channel";
+
     case http.isHttpUrl(term):
       return "http_url";
 
@@ -32,5 +37,6 @@ export const sourceType = (term?: string | null): SourceType | undefined => {
 };
 
 export * from "./http";
+export * from "./telegram";
 export * from "./twitter";
 export * from "./youtube";
