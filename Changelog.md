@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://critocrito///compare/v0.1.6...v0.1.7) (2021-08-17)
+
+
+### Features
+
+* add Telegram channels as source type ([f9be3cf](https://critocrito///commit/f9be3cfe50faa7241583a44b890b05bcdf9f4f29))
+
 ### [0.1.6](https://github.com/critocrito/sugarcube-source-types/compare/v0.1.5...v0.1.6) (2020-08-10)
 
 
